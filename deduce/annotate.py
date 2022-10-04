@@ -43,7 +43,7 @@ def annotate_names(
         # If the condition is met, tag the tokens and continue to the next position
         if prefix_condition:
             tokens_deid.append(
-                f"<PREFIXNAAM {join_tokens(tokens[token_index: next_token_index + 1])}>"
+                f"<PREFIXNAME {join_tokens(tokens[token_index: next_token_index + 1])}>"
             )
             token_index = next_token_index
             continue
@@ -60,7 +60,7 @@ def annotate_names(
         # If condition is met, tag the tokens and continue to the new position
         if interfix_condition:
             tokens_deid.append(
-                f"<INTERFIXNAAM {join_tokens(tokens[token_index: next_token_index + 1])}>"
+                f"<INTERFIXNAME {join_tokens(tokens[token_index: next_token_index + 1])}>"
             )
             token_index = next_token_index
             continue
@@ -82,7 +82,7 @@ def annotate_names(
                     # If followed by a period, also annotate the period
                     if next_token != "" and tokens[token_index + 1][0] == ".":
                         tokens_deid.append(
-                            f"<INITIAALPAT {join_tokens([tokens[token_index], '.'])}>"
+                            f"<INITIALPAT {join_tokens([tokens[token_index], '.'])}>"
                         )
                         if tokens[token_index + 1] == ".":
                             token_index += 1
@@ -91,7 +91,7 @@ def annotate_names(
 
                     # Else, annotate the token itself
                     else:
-                        tokens_deid.append(f"<INITIAALPAT {token}>")
+                        tokens_deid.append(f"<INITIALPAT {token}>")
 
                     # Break the first names loop
                     found = True
@@ -107,7 +107,7 @@ def annotate_names(
 
                 # If the condition is met, tag the token and move on
                 if first_name_condition:
-                    tokens_deid.append(f"<VOORNAAMPAT {token}>")
+                    tokens_deid.append(f"<FORNAMEPAT {token}>")
                     found = True
                     break
 
@@ -161,7 +161,7 @@ def annotate_names(
             # If a match was found, tag the appropriate tokens, and continue
             if match:
                 tokens_deid.append(
-                    f"<ACHTERNAAMPAT {join_tokens(tokens[token_index : token_index + len(surname_pattern)])}>"
+                    f"<SURNAMEPAT {join_tokens(tokens[token_index : token_index + len(surname_pattern)])}>"
                 )
                 token_index = token_index + len(surname_pattern) - 1
                 continue
@@ -180,18 +180,18 @@ def annotate_names(
 
         # If match, tag the token and continue
         if given_name_condition:
-            tokens_deid.append(f"<ROEPNAAMPAT {token}>")
+            tokens_deid.append(f"<GIVENNAMEPAT {token}>")
             continue
 
         ### Unknown first and last names
         # For both first and last names, check if the token
         # is on the lookup list and not on the whitelist
         if token in FIRST_NAMES and token.lower() not in WHITELIST:
-            tokens_deid.append(f"<VOORNAAMONBEKEND {token}>")
+            tokens_deid.append(f"<FORNAMEUNKNOWN {token}>")
             continue
 
         if token in SURNAMES and token.lower() not in WHITELIST:
-            tokens_deid.append(f"<ACHTERNAAMONBEKEND {token}>")
+            tokens_deid.append(f"<SURNAMEUNKNOWN {token}>")
             continue
 
         ### Wrap up
@@ -237,15 +237,15 @@ def annotate_names_context(text):
         ) and (
             # And the token is followed by either a
             # found surname, interfix or initial
-            "ACHTERNAAM" in next_token
+            "SURNAME" in next_token
             or "INTERFIX" in next_token
-            or "INITIAAL" in next_token
+            or "INITIAL" in next_token
         )
 
         # If match, tag the token and continue
         if initial_condition:
             tokens_deid.append(
-                f"<INITIAAL {join_tokens(tokens[token_index: next_token_index + 1])}>"
+                f"<INITIAL {join_tokens(tokens[token_index: next_token_index + 1])}>"
             )
             token_index = next_token_index
             continue
@@ -259,8 +259,8 @@ def annotate_names_context(text):
             # And the token is preceded by an initial, found initial or found name
             (
                 is_initial(previous_token)
-                or "INITIAAL" in previous_token
-                or "NAAM" in previous_token
+                or "INITIAL" in previous_token
+                or "NAME" in previous_token
             )
             and
             # And the next token must be capitalized
@@ -277,7 +277,7 @@ def annotate_names_context(text):
             deid_tokens_to_keep = tokens_deid[previous_token_index_deid:]
             tokens_deid = tokens_deid[:previous_token_index_deid]
             tokens_deid.append(
-                "<INTERFIXACHTERNAAM {}>".format(
+                "<INTERFIXSURNAME {}>".format(
                     join_tokens(deid_tokens_to_keep + tokens[token_index:next_token_index + 1])
                 )
             )
@@ -289,8 +289,8 @@ def annotate_names_context(text):
         initial_name_condition = (
             (
                 is_initial(token)
-                or "VOORNAAM" in token
-                or "ROEPNAAM" in token
+                or "FORNAME" in token
+                or "GIVENNAME" in token
                 or "PREFIX" in token
                 # And the next token is uppercase and has at least 3 characters
             )
@@ -302,7 +302,7 @@ def annotate_names_context(text):
         # If a match is found, tag and continue
         if initial_name_condition:
             tokens_deid.append(
-                f"<INITIAALHOOFDLETTERNAAM {join_tokens(tokens[token_index: next_token_index + 1])}>"
+                f"<INITIALCAPITALISEDNAME {join_tokens(tokens[token_index: next_token_index + 1])}>"
             )
             token_index = next_token_index
             continue
@@ -325,7 +325,7 @@ def annotate_names_context(text):
             )
             tokens_deid = tokens_deid[:previous_token_index_deid]
             tokens_deid.append(
-                f"<MEERDEREPERSONEN {join_tokens([previous_token_deid] + tokens[previous_token_index + 1 : next_token_index + 1])}>"
+                f"<MULTIPLEPERSON {join_tokens([previous_token_deid] + tokens[previous_token_index + 1 : next_token_index + 1])}>"
             )
             token_index = next_token_index
             continue
@@ -371,7 +371,7 @@ def annotate_residence(text):
 
         # Else annotate the longest sequence as residence
         max_list = max(prefix_matches, key=len)
-        tokens_deid.append(f"<LOCATIE {join_tokens(max_list)}>")
+        tokens_deid.append(f"<LOCATION {join_tokens(max_list)}>")
         token_index += len(max_list) - 1
 
     # Return the de-identified text
@@ -379,8 +379,8 @@ def annotate_residence(text):
 
 def replace_altrecht_text(match: re.Match) -> str:
     """
-    <INSTELLING Altrecht> (with Altrecht in any casing) followed by words that start with capital letters is annotated
-    as <INSTELLING Altrecht Those Words>, where Altrecht retains the original casing
+    <INSTITUTION Altrecht> (with Altrecht in any casing) followed by words that start with capital letters is annotated
+    as <INSTITUTION Altrecht Those Words>, where Altrecht retains the original casing
     :param match: the match object from a regular expression search
     :return: the final string
     """
@@ -413,14 +413,14 @@ def annotate_institution(text):
         # Else annotate the longest sequence as institution
         max_list = max(prefix_matches, key=len)
         joined_institution = join_tokens(tokens[token_index:token_index + len(max_list)])
-        tokens_deid.append("<INSTELLING {}>".format(joined_institution))
+        tokens_deid.append("<INSTITUTION {}>".format(joined_institution))
         token_index += len(max_list) - 1
 
     # Return
     text = join_tokens(tokens_deid)
 
     # Detect the word "Altrecht" followed by a capitalized word
-    text = re.sub('<INSTELLING [aA][lL][tT][rR][eE][cC][hH][tT]>((\s[A-Z]([\w]*))*)',
+    text = re.sub('<INSTITUTION [aA][lL][tT][rR][eE][cC][hH][tT]>((\s[A-Z]([\w]*))*)',
                   replace_altrecht_text,
                   text)
 
@@ -431,7 +431,7 @@ def get_date_replacement_(date_match: re.Match, punctuation_name: str) -> str:
     punctuation = date_match[punctuation_name]
     if len(punctuation) != 1:
         punctuation = ' '
-    return '<DATUM ' + date_match.group(1) + '>' + punctuation
+    return '<DATE ' + date_match.group(1) + '>' + punctuation
 
 ### Other annotation is done using a selection of finely crafted
 ### (but alas less finely documented) regular expressions.
@@ -452,7 +452,7 @@ def annotate_date(text):
 def annotate_age(text):
     """Annotate ages"""
     text = re.sub(
-        "(\d{1,3})([ -](jarige|jarig|jaar))(?![^<]*>)", "<LEEFTIJD \\1>\\2", text
+        "(\d{1,3})([ -](jarige|jarig|jaar))(?![^<]*>)", "<AGE \\1>\\2", text
     )
     return text
 
@@ -461,19 +461,19 @@ def annotate_phonenumber(text):
     """Annotate phone numbers"""
     text = re.sub(
         "(((0)[1-9]{2}[0-9][-]?[1-9][0-9]{5})|((\\+31|0|0031)[1-9][0-9][-]?[1-9][0-9]{6}))(?![^<]*>)",
-        "<TELEFOONNUMMER \\1>",
+        "<PHONENUMBER \\1>",
         text,
     )
 
     text = re.sub(
         "(((\\+31|0|0031)6){1}[-]?[1-9]{1}[0-9]{7})(?![^<]*>)",
-        "<TELEFOONNUMMER \\1>",
+        "<PHONENUMBER \\1>",
         text,
     )
 
     text = re.sub(
         "((\(\d{3}\)|\d{3})\s?\d{3}\s?\d{2}\s?\d{2})(?![^<]*>)",
-        "<TELEFOONNUMMER \\1>",
+        "<PHONENUMBER \\1>",
         text,
     )
 
@@ -482,7 +482,7 @@ def annotate_phonenumber(text):
 
 def annotate_patientnumber(text):
     """Annotate patient numbers"""
-    text = re.sub("(\d{7})(?![^<]*>)", "<PATIENTNUMMER \\1>", text)
+    text = re.sub("(\d{7})(?![^<]*>)", "<PATIENTNUMBER \\1>", text)
     return text
 
 
@@ -490,11 +490,11 @@ def annotate_postalcode(text):
     """Annotate postal codes"""
     text = re.sub(
         "(((\d{4} [A-Z]{2})|(\d{4}[a-zA-Z]{2})))(?P<n>\W)(?![^<]*>)",
-        "<LOCATIE \\1>\\5",
+        "<LOCATION \\1>\\5",
         text,
     )
-    text = re.sub("<LOCATIE\s(\d{4}mg)>", "\\1", text)
-    text = re.sub("([Pp]ostbus\s\d{5})", "<LOCATIE \\1>", text)
+    text = re.sub("<LOCATION\s(\d{4}mg)>", "\\1", text)
+    text = re.sub("([Pp]ostbus\s\d{5})", "<LOCATION \\1>", text)
     return text
 
 
@@ -502,9 +502,9 @@ def get_address_match_replacement(match: re.Match) -> str:
     text = match.group(0)
     stripped = text.strip()
     if len(text) == len(stripped):
-        return f"<LOCATIE {text}>"
+        return f"<LOCATION {text}>"
 
-    return f"<LOCATIE {stripped}>{' ' * (len(text) - len(stripped))}"
+    return f"<LOCATION {stripped}>{' ' * (len(text) - len(stripped))}"
 
 
 def annotate_address(text):

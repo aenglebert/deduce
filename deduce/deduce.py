@@ -246,13 +246,13 @@ def deidentify_annotations(text):
 
     # For al the other types of tags
     for tagname in [
-        "PERSOON",
-        "LOCATIE",
-        "INSTELLING",
-        "DATUM",
-        "LEEFTIJD",
-        "PATIENTNUMMER",
-        "TELEFOONNUMMER",
+        "PERSON",
+        "LOCATION",
+        "INSTITUTION",
+        "DATE",
+        "AGE",
+        "PATIENTNUMBER",
+        "PHONENUMBER",
         "URL",
     ]:
 

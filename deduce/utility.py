@@ -179,7 +179,7 @@ def flatten_text(text):
         if "PAT" in tagname:
             tagname = "PATIENT"
         else:
-            tagname = "PERSOON"
+            tagname = "PERSON"
 
         # Replace the found tag with the new, flattened tag
         text = text.replace(tag, f"<{tagname} {value.strip()}>")
@@ -194,7 +194,7 @@ def flatten_text(text):
         text,
     )
 
-    # Find all names of tags, to replace them with either "PATIENT" or "PERSOON"
+    # Find all names of tags, to replace them with either "PATIENT" or "PERSON"
     tagnames = re.findall("<([A-Z]+)", text)
 
     # Iterate over all tags
@@ -206,7 +206,7 @@ def flatten_text(text):
 
         # Otherwise, they concern a person
         else:
-            text = re.sub(tag, "PERSOON", text)
+            text = re.sub(tag, "PERSON", text)
 
     # Return the text with all replacements
     return text
@@ -382,8 +382,8 @@ def read_list(
 def parse_tag(tag: str) -> tuple:
     """
     Parse a Deduce-style tag into its tag proper and its text. Does not handle nested tags
-    :param tag: the Deduce-style tag, for example, <VOORNAAMONBEKEND Peter>
-    :return: the tag type and text, for example, ("VOORNAAMONBEKEND", "Peter")
+    :param tag: the Deduce-style tag, for example, <FORNAMEUNKNOWN Peter>
+    :return: the tag type and text, for example, ("FORNAMEUNKNOWN", "Peter")
     """
     split_ix = tag.index(" ")
     return tag[1:split_ix], tag[split_ix + 1 : len(tag) - 1]

@@ -20,9 +20,9 @@ class TestDeduceMethods(unittest.TestCase):
 
         expected_text = (
             "Dit is stukje tekst met daarin de naam <PATIENT Jan Jansen>. De <PATIENT patient J. Jansen> "
-            "(e: <URL j.jnsen@email.com>, t: <TELEFOONNUMMER 06-12345678>) is <LEEFTIJD 64> jaar oud en "
-            "woonachtig in <LOCATIE Utrecht>. Hij werd op <DATUM 10 oktober> door arts "
-            "<PERSOON Peter de Visser> ontslagen van de kliniek van het <INSTELLING UMCU>."
+            "(e: <URL j.jnsen@email.com>, t: <PHONENUMBER 06-12345678>) is <AGE 64> jaar oud en "
+            "woonachtig in <LOCATION Utrecht>. Hij werd op <DATE 10 oktober> door arts "
+            "<PERSON Peter de Visser> ontslagen van de kliniek van het <INSTITUTION UMCU>."
         )
         self.assertEqual(expected_text, annotated)
 
@@ -33,33 +33,33 @@ class TestDeduceMethods(unittest.TestCase):
             u"oktober door arts Peter de Visser ontslagen van de kliniek van het UMCU."
         )
         annotated_text = (
-            "Dit is stukje tekst met daarin de naam <PERSOON Jan Jansen>. De "
-            "<PERSOON patient J. Jansen> (e: <URL j.jnsen@email.com>, t: <TELEFOONNUMMER 06-12345678>) "
-            "is <LEEFTIJD 64> jaar oud en woonachtig in <LOCATIE Utrecht>. Hij werd op "
-            "<DATUM 10 oktober> door arts <PERSOON Peter de Visser> ontslagen van de kliniek van het "
-            "<INSTELLING umcu>."
+            "Dit is stukje tekst met daarin de naam <PERSON Jan Jansen>. De "
+            "<PERSON patient J. Jansen> (e: <URL j.jnsen@email.com>, t: <PHONENUMBER 06-12345678>) "
+            "is <AGE 64> jaar oud en woonachtig in <LOCATION Utrecht>. Hij werd op "
+            "<DATE 10 oktober> door arts <PERSON Peter de Visser> ontslagen van de kliniek van het "
+            "<INSTITUTION umcu>."
         )
         mock_tags = [
-            "<PERSOON Jan Jansen>",
-            "<PERSOON patient J. Jansen>",
+            "<PERSON Jan Jansen>",
+            "<PERSON patient J. Jansen>",
             "<URL j.jnsen@email.com>",
-            "<TELEFOONNUMMER 06-12345678>",
-            "<LEEFTIJD 64>",
-            "<LOCATIE Utrecht>",
-            "<DATUM 10 oktober>",
-            "<PERSOON Peter de Visser>",
-            "<INSTELLING umcu>",
+            "<PHONENUMBER 06-12345678>",
+            "<AGE 64>",
+            "<LOCATION Utrecht>",
+            "<DATE 10 oktober>",
+            "<PERSON Peter de Visser>",
+            "<INSTITUTION umcu>",
         ]
         mock_annotations = [
             Annotation(39, 49, "PATIENT", "Jan Jansen"),
             Annotation(62, 71, "PATIENT", "J. Jansen"),
             Annotation(76, 93, "URL", "j.jnsen@email.com"),
-            Annotation(98, 109, "TELEFOONNUMMER", "06-12345678"),
-            Annotation(114, 116, "LEEFTIJD", "64"),
-            Annotation(143, 150, "LOCATIE", "Utrecht"),
-            Annotation(164, 174, "DATUM", "10 oktober"),
-            Annotation(185, 200, "PERSOON", "Peter de Visser"),
-            Annotation(234, 238, "INSTELLING", "umcu"),
+            Annotation(98, 109, "PHONENUMBER", "06-12345678"),
+            Annotation(114, 116, "AGE", "64"),
+            Annotation(143, 150, "LOCATION", "Utrecht"),
+            Annotation(164, 174, "DATE", "10 oktober"),
+            Annotation(185, 200, "PERSON", "Peter de Visser"),
+            Annotation(234, 238, "INSTITUTION", "umcu"),
         ]
 
         def mock_annotate_text(
@@ -121,11 +121,11 @@ class TestDeduceMethods(unittest.TestCase):
         self.assertEqual(Annotation(13, 16, "PATIENT", "Jan"), annotations[0])
 
     def test_has_nested_tags_true(self):
-        text = "<PERSOON Peter <INSTELLING Altrecht>>"
+        text = "<PERSON Peter <INSTITUTION Altrecht>>"
         self.assertTrue(deduce.deduce.has_nested_tags(text))
 
     def test_has_nested_tags_false(self):
-        text = "<PERSOON Peter> from <INSTELLING Altrecht>"
+        text = "<PERSON Peter> from <INSTITUTION Altrecht>"
         self.assertFalse(deduce.deduce.has_nested_tags(text))
 
     def test_has_nested_tags_error(self):
@@ -139,7 +139,7 @@ class TestDeduceMethods(unittest.TestCase):
         )
 
     def test_do_not_merge_adjacent_tags_with_different_categories(self):
-        text = "<PATIENT Jorge><LOCATIE Ramos>"
+        text = "<PATIENT Jorge><LOCATION Ramos>"
         self.assertEqual(text, deduce.deduce.merge_adjacent_tags(text))
 
     def test_merge_almost_adjacent_tags(self):
