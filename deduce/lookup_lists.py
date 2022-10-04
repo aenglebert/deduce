@@ -24,7 +24,7 @@ INTERFIX_SURNAMES = list(
 PREFIXES = read_list("prefix.lst")
 
 # Read a list of medical terms
-MEDTERM = read_list("medischeterm.lst", encoding="latin-1")
+MEDTERM = read_list("cbip.lst", encoding="latin-1")
 
 # Read the top 1000 of most used words in Dutch, and then filter all surnames from it
 TOP1000 = read_list("top1000_fr.lst", encoding="latin-1")
