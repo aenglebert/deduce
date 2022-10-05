@@ -101,6 +101,7 @@ INSTITUTIONS = list(set(FILTERED_INSTITUTIONS).difference(WHITELIST))
 
 # Read the list
 RESIDENCES = read_list("woonplaats.lst", encoding="utf-8", normalize=True)
+RESIDENCES += read_list("cities_be.lst", encoding="utf-8", normalize=True)
 
 # Remove parentheses from the names
 RESIDENCES = [re.sub("\(.+\)", "", residence) for residence in RESIDENCES]
