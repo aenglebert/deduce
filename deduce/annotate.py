@@ -439,7 +439,7 @@ def annotate_date(text):
                   punctuation_name + ">\D)(?![^<]*>)",
                   lambda date_match: get_date_replacement_(date_match, punctuation_name),
                   text)
-    text = re.sub("(\d{1,2}[^\w]{,2}(januari|februari|maart|april|mei|juni|juli|augustus|september|oktober|november|december)([- /.]{,2}(\d{4}|\d{2})){,1})(?P<" +
+    text = re.sub("(\d{1,2}[^\w]{,2}(januari|februari|maart|april|mei|juni|juli|augustus|september|oktober|november|december|janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)([- /.]{,2}(\d{4}|\d{2})){,1})(?P<" +
                   punctuation_name + ">\D)(?![^<]*>)",
                   lambda date_match: get_date_replacement_(date_match, punctuation_name),
                   text)
