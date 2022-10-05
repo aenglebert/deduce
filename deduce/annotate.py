@@ -20,7 +20,6 @@ def annotate_names(
 
     # Iterate over all tokens
     while token_index < len(tokens) - 1:
-
         # Current position
         token_index = token_index + 1
 
@@ -43,9 +42,9 @@ def annotate_names(
         # If the condition is met, tag the tokens and continue to the next position
         if prefix_condition:
             tokens_deid.append(
-                f"<PREFIXNAME {join_tokens(tokens[token_index: next_token_index + 1])}>"
+                f"<PREFIXNAME {join_tokens(tokens[token_index])}>"
             )
-            token_index = next_token_index
+            #token_index = next_token_index
             continue
 
         ### Interfix based detection
@@ -60,9 +59,9 @@ def annotate_names(
         # If condition is met, tag the tokens and continue to the new position
         if interfix_condition:
             tokens_deid.append(
-                f"<INTERFIXNAME {join_tokens(tokens[token_index: next_token_index + 1])}>"
+                f"<INTERFIXNAME {join_tokens(tokens[token_index])}>"
             )
-            token_index = next_token_index
+            #token_index = next_token_index
             continue
 
         ### First name
@@ -75,10 +74,8 @@ def annotate_names(
 
             # Voornamen
             for patient_first_name in str(patient_first_names).split(" "):
-
                 # Check if the initials match
                 if token == patient_first_name[0]:
-
                     # If followed by a period, also annotate the period
                     if next_token != "" and tokens[token_index + 1][0] == ".":
                         tokens_deid.append(
@@ -99,9 +96,9 @@ def annotate_names(
 
                 # Check that either an exact match exists, or a fuzzy match
                 # if the token has more than 3 characters
-                first_name_condition = token == patient_first_name or (
+                first_name_condition = token.lower() == patient_first_name.lower() or (
                     len(token) > 3
-                    and edit_distance(token, patient_first_name, transpositions=True)
+                    and edit_distance(token.lower(), patient_first_name.lower(), transpositions=True)
                     <= 1
                 )
 
