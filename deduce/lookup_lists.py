@@ -43,8 +43,11 @@ WHITELIST = list(
 ### Institutions
 
 # Read the list
+INSTITUTIONS_PREFIX = read_list("institutions_prefix.lst", min_len=2)
+
 INSTITUTIONS = read_list("instellingen.lst", min_len=3)
 INSTITUTIONS += read_list("hospitals_be.lst", min_len=3)
+INSTITUTIONS += INSTITUTIONS_PREFIX
 
 # These words sometimes occur as the first or final word of the official names of institutions,
 # but are not usually referred to as such in the colloquial version
