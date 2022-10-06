@@ -446,6 +446,11 @@ def annotate_date(text):
                   punctuation_name + ">\D)(?![^<]*>)",
                   lambda date_match: get_date_replacement_(date_match, punctuation_name),
                   text)
+
+    text = re.sub("(19|20)\d{2}",
+                  lambda date_match: '<DATE ' + date_match.group() + '>',
+                  text)
+
     return text
 
 
