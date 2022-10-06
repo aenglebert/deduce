@@ -420,6 +420,12 @@ def annotate_institution(text):
                   replace_altrecht_text,
                   text)
 
+    # Detect the pattern <INSTITUTION Saint-> <PERSON name> and convert to <INSTITUTION Saint-Name>
+    text = re.sub('(saint|sint|st|st.)\s?-?\s?\>\s?<PERSON ',
+                  lambda pattern: pattern.group().split(">")[0],
+                  text,
+                  flags=re.IGNORECASE)
+
     # Return the text
     return text
 
