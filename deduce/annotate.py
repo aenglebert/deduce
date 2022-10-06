@@ -501,7 +501,14 @@ def annotate_postalcode(text):
     """Annotate postal codes"""
     text = re.sub(
         "(((\d{4} [A-Z]{2})|(\d{4}[a-zA-Z]{2})))(?P<n>\W)(?![^<]*>)",
-        "<LOCATION \\1>\\5",
+        lambda post_code: "<LOCATION " + post_code.group() + ">",
+        text,
+    )
+
+    # Belgium postcode
+    text = re.sub(
+        "(?:(?:[1-9])(?:\d{3}))",
+        lambda post_code: "<LOCATION " + post_code.group() + ">",
         text,
     )
     text = re.sub("<LOCATION\s(\d{4}mg)>", "\\1", text)

@@ -79,6 +79,10 @@ def annotate_text(
     if institutions:
         text = annotate_institution(text)
 
+    # Dates
+    if dates:
+        text = annotate_date(text)
+
     # Geographical locations
     if locations:
         text = annotate_residence(text)
@@ -92,10 +96,6 @@ def annotate_text(
     # Patient numbers
     if patient_numbers:
         text = annotate_patientnumber(text)
-
-    # Dates
-    if dates:
-        text = annotate_date(text)
 
     # Ages
     if ages:
