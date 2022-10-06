@@ -130,9 +130,6 @@ for institution in INSTITUTIONS:
     # If the institution name contains 3 or more words, also add the acronym
     if len(institution.split(" ")) >= 3:
         institution = institution.replace("-", " ").replace("   ", " ").replace("  ", " ")
-        for x in institution.split(" "):
-            print(x)
-            print("".join(x[0]))
         FILTERED_INSTITUTIONS.append("".join(x[0] for x in institution.replace("-", " ").split(" ")))
 
 # Remove doubles, occurrences on whitelist, and convert back to list
