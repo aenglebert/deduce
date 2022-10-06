@@ -456,6 +456,12 @@ def annotate_date(text):
                   lambda date_match: '<DATE ' + date_match.group() + '>',
                   text)
 
+    # Remove page number annotated as date
+    text = re.sub("Page\s?:?\s?<DATE \d+\s*\/?\s*\d*\s*>",
+                  lambda page: "".join(page.group().split('<DATE '))[:-1],
+                  text,
+                  flags=re.IGNORECASE)
+
     return text
 
 
