@@ -435,10 +435,13 @@ def get_date_replacement_(date_match: re.Match, punctuation_name: str) -> str:
 def annotate_date(text):
     # Name the punctuation mark that comes after a date, for replacement purposes
     punctuation_name = 'n'
-    text = re.sub("(([1-9]|0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012]|[1-9])([- /.]{,2}(\d{4}|\d{2})){,1})(?P<" +
-                  punctuation_name + ">\D)(?![^<]*>)",
-                  lambda date_match: get_date_replacement_(date_match, punctuation_name),
+
+    text = re.sub("""(?ix) (((Lundi|Mardi|Mercredi|Jeudi|Vendredi|Samedi|Dimanche))?
+    \d{1,2}\s(janvier|février|Mars|Avril|Mai|Juin|Juillet|Août|Septembre|Octobre|Novembre|Décembre)
+    (\s\d{2,4})?)|(0[1-9]|[12]\d|3[01])\s?\/\s?\d{1,2}(\s?\/\s?\d{2,4})""",
+                  lambda date_match: '<DATE ' + date_match.group() + '>',
                   text)
+
     text = re.sub("(\d{1,2}[^\w]{,2}(januari|februari|maart|april|mei|juni|juli|augustus|september|oktober|november|december|janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)([- /.]{,2}(\d{4}|\d{2})){,1})(?P<" +
                   punctuation_name + ">\D)(?![^<]*>)",
                   lambda date_match: get_date_replacement_(date_match, punctuation_name),
