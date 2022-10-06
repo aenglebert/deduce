@@ -130,10 +130,9 @@ def annotate_names(
 
             # See if there is a fuzzy match, and if there are enough tokens left
             # to match the rest of the pattern
-            if edit_distance(token, surname_pattern[0], transpositions=True) <= 1 and (
+            if edit_distance(token.lower(), surname_pattern[0].lower(), transpositions=True) <= 1 and (
                 token_index + len(surname_pattern)
             ) < len(tokens):
-
                 # Found a match
                 match = True
 
@@ -143,8 +142,8 @@ def annotate_names(
                     # If the distance is too big, disgregard the match
                     if (
                         edit_distance(
-                            tokens[token_index + counter],
-                            surname_pattern[counter],
+                            tokens[token_index + counter].lower(),
+                            surname_pattern[counter].lower(),
                             transpositions=True,
                         )
                         > 1
