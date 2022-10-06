@@ -437,8 +437,8 @@ def annotate_date(text):
     punctuation_name = 'n'
 
     text = re.sub("""(?ix) (((Lundi|Mardi|Mercredi|Jeudi|Vendredi|Samedi|Dimanche))?
-    \d{1,2}\s(janvier|février|Mars|Avril|Mai|Juin|Juillet|Août|Septembre|Octobre|Novembre|Décembre)
-    (\s\d{2,4})?)|(0[1-9]|[12]\d|3[01])\s?\/\s?\d{1,2}(\s?\/\s?\d{2,4})""",
+    (\d{1,2}\s)?(janvier|février|Mars|Avril|Mai|Juin|Juillet|Août|Septembre|Octobre|Novembre|Décembre)
+    [\s\n\r\.,](\d{2,4})?)|(0[1-9]|[12]\d|3[01])\s?\/\s?\d{1,2}(\s?\/\s?\d{2,4})""",
                   lambda date_match: '<DATE ' + date_match.group() + '>',
                   text)
 
