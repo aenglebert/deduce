@@ -554,8 +554,26 @@ def annotate_address(text):
     return text
 
 
+def merge_mail(match):
+    filtered = match.group().split("<PATIENT ")[-1].split("<PERSON ")[-1]
+    filtered = "".join(filtered.split(">"))
+    return "<URL " + filtered + ">"
+
+
 def annotate_email(text):
     """Annotate emails"""
+    text = re.sub(
+        "<(PATIENT |PERSON )\w+\s?>@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*",
+        merge_mail,
+        text,
+    )
+
+    text = re.sub(
+        "[\w\d!#$%&'*+-/=?^_`{|}~]*<URL ",
+        merge_mail,
+        text,
+    )
+
     text = re.sub(
         "(([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?))(?![^<]*>)",
         "<URL \\1>",
