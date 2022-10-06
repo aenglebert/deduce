@@ -491,8 +491,12 @@ def annotate_phonenumber(text):
     return text
 
 
-def annotate_patientnumber(text):
+def annotate_patientnumber(text, patient_id):
     """Annotate patient numbers"""
+
+    if len(patient_id) >= 4:
+        text = re.sub(patient_id, lambda patient_num : "<PATIENTNUMBER " + patient_num.group() + ">", text, re.IGNORECASE)
+
     text = re.sub("(\d{7})(?![^<]*>)", "<PATIENTNUMBER \\1>", text)
     return text
 

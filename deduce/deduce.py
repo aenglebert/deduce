@@ -24,6 +24,8 @@ def annotate_text(
     patient_surname="",
     # Given name`
     patient_given_name="",
+    # ID number of the patient
+    patient_id="",
     # Person names, including initials
     names=True,
     # Geographical locations
@@ -75,6 +77,10 @@ def annotate_text(
         if flatten:
             text = flatten_text(text)
 
+    # Patient numbers
+    if patient_numbers:
+        text = annotate_patientnumber(text, patient_id)
+
     # Institutions
     if institutions:
         text = annotate_institution(text)
@@ -92,10 +98,6 @@ def annotate_text(
     # Phone numbers
     if phone_numbers:
         text = annotate_phonenumber(text)
-
-    # Patient numbers
-    if patient_numbers:
-        text = annotate_patientnumber(text)
 
     # Ages
     if ages:
