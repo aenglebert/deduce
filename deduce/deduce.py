@@ -85,6 +85,10 @@ def annotate_text(
     if institutions:
         text = annotate_institution(text)
 
+    # Phone numbers
+    if phone_numbers:
+        text = annotate_phonenumber(text)
+
     # Dates
     if dates:
         text = annotate_date(text)
@@ -94,10 +98,6 @@ def annotate_text(
         text = annotate_residence(text)
         text = annotate_address(text)
         text = annotate_postalcode(text)
-
-    # Phone numbers
-    if phone_numbers:
-        text = annotate_phonenumber(text)
 
     # Ages
     if ages:
