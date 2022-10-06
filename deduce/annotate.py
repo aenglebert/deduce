@@ -462,25 +462,25 @@ def annotate_phonenumber(text):
     # Belgium phone number
     text = re.sub(
         "(((\+|00)32[ ]?(?:\(0\)[ ]?)?)|0){1}(4(60|[789]\d)\/?(\s?\d{2}\.?){2}(\s?\d{2})|(\d\/?\s?\d{3}|\d{2}\/?\s?\d{2})(\.?\s?\d{2}){2})",
-        "<PHONENUMBER \\1>",
+        lambda phone_match: '<PHONENUMBER ' + phone_match.group() + '>',
         text,
     )
 
     # Dutch phone number
     text = re.sub(
         "(((0)[1-9]{2}[0-9][-]?[1-9][0-9]{5})|((\\+31|0|0031)[1-9][0-9][-]?[1-9][0-9]{6}))(?![^<]*>)",
-        "<PHONENUMBER \\1>",
+        lambda phone_match: '<PHONENUMBER ' + phone_match.group() + '>',
         text,
     )
     text = re.sub(
         "(((\\+31|0|0031)6){1}[-]?[1-9]{1}[0-9]{7})(?![^<]*>)",
-        "<PHONENUMBER \\1>",
+        lambda phone_match: '<PHONENUMBER ' + phone_match.group() + '>',
         text,
     )
 
     text = re.sub(
         "((\(\d{3}\)|\d{3})\s?\d{3}\s?\d{2}\s?\d{2})(?![^<]*>)",
-        "<PHONENUMBER \\1>",
+        lambda phone_match: '<PHONENUMBER ' + phone_match.group() + '>',
         text,
     )
 
