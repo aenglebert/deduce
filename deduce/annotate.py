@@ -186,7 +186,7 @@ def annotate_names(
             tokens_deid.append(f"<FORNAMEUNKNOWN {token}>")
             continue
 
-        if token in SURNAMES and token.lower() not in WHITELIST:
+        if token[0].isupper() and token.lower() in SURNAMES and token.lower() not in WHITELIST:
             tokens_deid.append(f"<SURNAMEUNKNOWN {token}>")
             continue
 

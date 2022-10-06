@@ -10,6 +10,8 @@ FIRST_NAMES = read_list("firstname_nl.lst", min_len=2)
 
 # Read last names
 SURNAMES = read_list("surname_nl.lst", encoding="utf-8", min_len=2, normalize=True)
+SURNAMES += read_list("surname_be.lst", encoding="utf-8", min_len=2, normalize=True)
+SURNAMES = [surname.lower() for surname in SURNAMES]
 
 # Read interfixes (such as 'van der', etc)
 INTERFIXES = read_list("voorvoegsel.lst")
@@ -30,7 +32,7 @@ MEDTERM += read_list("medischeterm.lst", encoding="latin-1")
 # Read the top 1000 of most used words in Dutch, and then filter all surnames from it
 TOP1000 = read_list("top1000_fr.lst", encoding="latin-1")
 TOP1000 += read_list("top1000_du.lst", encoding="latin-1")
-TOP1000 = list(set(TOP1000).difference(read_list("achternaam.lst", lower=True)))
+TOP1000 = list(set(TOP1000).difference(read_list("firstname_nl.lst", lower=True)))
 
 # A list of stop words
 # french stopwords from https://github.com/stopwords-iso/stopwords-fr/blob/master/stopwords-fr.json
