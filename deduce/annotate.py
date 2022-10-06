@@ -522,6 +522,14 @@ def annotate_address(text):
         get_address_match_replacement,
         text,
     )
+
+    text = re.sub(
+        r"(((\d+){1,6}(\w{0,2})?|(\d+){0,6}))(rue|avenue|chaussée|chemin|allée|enclos|route|cité|quai|place|"
+        r"square|boulevard|drève|quartier|porte|colline|val|impasse|promenade|rempart|passage)"
+        r"(\s(d'|de|du|des|l'|le|la|les))*\s*,?\s*[A-Z]\w+\s*,?\s*(((\d+){1,6}(\w{0,2})?|(\d+){0,6}))",
+        get_address_match_replacement,
+        text,
+    )
     return text
 
 
