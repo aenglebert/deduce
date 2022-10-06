@@ -153,6 +153,7 @@ FILTERED_RESIDENCES = set(RESIDENCES_SET)
 
 # Also add the version with hyphen (-) replaced by whitespace
 for residence in RESIDENCES_SET:
+    FILTERED_RESIDENCES.add(residence.upper())
     if "-" in residence:
         FILTERED_RESIDENCES.add(re.sub("\-", " ", residence))
 
