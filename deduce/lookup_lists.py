@@ -28,6 +28,7 @@ MEDTERM = read_list("cbip.lst", encoding="latin-1")
 
 # Read the top 1000 of most used words in Dutch, and then filter all surnames from it
 TOP1000 = read_list("top1000_fr.lst", encoding="latin-1")
+TOP1000 += read_list("top1000_du.lst", encoding="latin-1")
 TOP1000 = list(set(TOP1000).difference(read_list("achternaam.lst", lower=True)))
 
 # A list of stop words
