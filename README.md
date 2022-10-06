@@ -85,19 +85,19 @@ deduce.deidentify_annotations(
 >>> deidentified_fr = deduce.deidentify_annotations(annotated_fr)
 
 >>> print (annotated_nl)
-Dit is stukje tekst met daarin de naam <PATIENT Jan Peeters>. De patient <PATIENT J. Peeters> (e: j.<PATIENT peeters>@<URL email.com>, t: <PHONENUMBER 0471 23 45 67>)
+Dit is stukje tekst met daarin de naam <PATIENT Jan Peeters>. De patient <PATIENT J. Peeters> (e: <URL j.peeters@email.com>, t: <PHONENUMBER 0471 23 45 67>)
  is <AGE 64> jaar oud en woonachtig in <LOCATION Antwerpen>. Hij werd op <DATE 10 oktober> door arts <PERSON Peter de Janssens> ontslagen van de <INSTITUTION UZA> in <LOCATION Antwerpen>.
 
 >>> print (annotated_fr)
-Il s'agit d'un morceau de texte contenant le nom de <PATIENT Jean Dubois>. Le patient <PATIENT J. Dubois> (e : j.<PATIENT dubois>@<URL email.com>, t : <PHONENUMBER 0471 23 45 67>)
+Il s'agit d'un morceau de texte contenant le nom de <PATIENT Jean Dubois>. Le patient <PATIENT J. Dubois> (e : <URL j.dubois@email.com>, t : <PHONENUMBER 0471 23 45 67>)
  est âgé de 64 ans et vit à <LOCATION Namur>. Il est sorti de l'<INSTITUTION Hopital Saint-Elisabeth> après avoir été vu par le <PERSON docteur John Dupont> le <DATE 10 octobre.>
 
 >>> print (deidentified_nl)
-Dit is stukje tekst met daarin de naam <PATIENT>. De patient <PATIENT> (e: j.<PATIENT>@<URL-1>, t: <PHONENUMBER-1>)
+Dit is stukje tekst met daarin de naam <PATIENT>. De patient <PATIENT> (e: <URL-1>, t: <PHONENUMBER-1>)
  is <AGE-1> jaar oud en woonachtig in <LOCATION-1>. Hij werd op <DATE-1> door arts <PERSON-1> ontslagen van de <INSTITUTION-1> in <LOCATION-1>.
 
 >>> print (deidentified_fr)
-Il s'agit d'un morceau de texte contenant le nom de <PATIENT>. Le patient <PATIENT> (e : j.<PATIENT>@<URL-1>, t : <PHONENUMBER-1>)
+Il s'agit d'un morceau de texte contenant le nom de <PATIENT>. Le patient <PATIENT> (e : <URL-1>, t : <PHONENUMBER-1>)
  est âgé de 64 ans et vit à <LOCATION-1>. Il est sorti de l'<INSTITUTION-1> après avoir été vu par le <PERSON-1> le <DATE-1>
 
 
