@@ -34,6 +34,7 @@ TOP1000 = list(set(TOP1000).difference(read_list("achternaam.lst", lower=True)))
 # A list of stop words
 # french stopwords from https://github.com/stopwords-iso/stopwords-fr/blob/master/stopwords-fr.json
 STOPWORDS = read_list("stopwords_fr.lst")
+STOPWORDS += read_list("stopwoord.lst")
 
 # The whitelist of words that are never annotated as names consists of
 # the medical terms, the top1000 words and the stopwords
