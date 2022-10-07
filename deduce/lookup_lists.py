@@ -7,6 +7,7 @@ from .tokenizer import tokenize_split
 
 #  Read first names
 FIRST_NAMES = read_list("firstname_nl.lst", min_len=2)
+FIRST_NAMES += read_list("firstname_be.lst", min_len=2)
 
 # Read last names
 SURNAMES = read_list("surname_nl.lst", encoding="utf-8", min_len=2, normalize=True)
