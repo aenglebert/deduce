@@ -25,7 +25,7 @@ The details of the development and workings of the initial method by Menger et a
 Installing can be done through pip and git: 
 
 ``` python
->>> pip install deduce
+>>> pip install git+https://github.com/aenglebert/deduced.git@master
 ```
 
 Or from source, simply download and use python to install:
@@ -89,8 +89,8 @@ Dit is stukje tekst met daarin de naam <PATIENT Jan Peeters>. De patient <PATIEN
  is <AGE 64> jaar oud en woonachtig in <LOCATION Antwerpen>. Hij werd op <DATE 10 oktober> door arts <PERSON Peter de Janssens> ontslagen van de <INSTITUTION UZA> in <LOCATION Antwerpen>.
 
 >>> print (annotated_fr)
-Il s'agit d'un morceau de texte contenant le nom de <PATIENT Jean Dubois>. Le patient <PATIENT J. Dubois> (e : <URL j.dubois@email.com>, t : <PHONENUMBER 0471 23 45 67>)
- est âgé de 64 ans et vit à <LOCATION Namur>. Il est sorti de l'<INSTITUTION Hopital Saint-Elisabeth> après avoir été vu par le <PERSON docteur John Dupont> le <DATE 10 octobre.>
+Il s'agit d'un morcgeau de texte contenant le nom de <PATIENT Jean Dubois>. Le patient <PATIENT J. Dubois> (e : <URL j.dubois@email.com>, t : <PHONENUMBER 0471 23 45 67>)
+ est âgé de <AGE 64> ans et vit à <LOCATION Namur>. Il est sorti de l'<INSTITUTION Hopital Saint-Elisabeth> après avoir été vu par le <PERSON docteur John Dupont> le <DATE 10 octobre.>
 
 >>> print (deidentified_nl)
 Dit is stukje tekst met daarin de naam <PATIENT>. De patient <PATIENT> (e: <URL-1>, t: <PHONENUMBER-1>)
@@ -98,7 +98,7 @@ Dit is stukje tekst met daarin de naam <PATIENT>. De patient <PATIENT> (e: <URL-
 
 >>> print (deidentified_fr)
 Il s'agit d'un morceau de texte contenant le nom de <PATIENT>. Le patient <PATIENT> (e : <URL-1>, t : <PHONENUMBER-1>)
- est âgé de 64 ans et vit à <LOCATION-1>. Il est sorti de l'<INSTITUTION-1> après avoir été vu par le <PERSON-1> le <DATE-1>
+ est âgé de <AGE-1> ans et vit à <LOCATION-1>. Il est sorti de l'<INSTITUTION-1> après avoir été vu par le <PERSON-1> le <DATE-1>
 
 
 ```
@@ -107,24 +107,13 @@ Il s'agit d'un morceau de texte contenant le nom de <PATIENT>. Le patient <PATIE
 
 The lookup lists in the `data/` folder can be tailored to the users specific needs. This is especially recommended for the list of names of institutions, since they are by default tailored to location of development and testing of the method. Regular expressions can be modified in `annotate.py`, this is for the same reason recommended for detecting patient numbers. 
 
-## Contributing
-
-Thanks a lot for considering to make a contribution to DEDUCE, we are very open to your help!
-
-* If you need support, have a question, or found a bug/error, please get in touch by [creating a New Issue](https://github.com/vmenger/deduce/issues). We don't have an issue template, just try to be specific and complete, so we can tackle it. 
-* If you want to make a contribution either to the code or the docs, please take a few minutes to read our [contribution guidelines](CONTRIBUTING.md). This greatly improve the chances of your work being merged into the repository.
-
-## Changelog
-
-You may find detailed versioning information in the [changelog](CHANGELOG.md).
-
 ## Authors
 
 * **Vincent Menger** - *Initial work* 
 * **Jonathan de Bruin** - *Code review*
 * **Pablo Mosteiro** - *Bug fixes, structured annotations*
 
-For the Belgian adaptation: Alexandre Englebert
+*For the Belgian adaptation:* **Alexandre Englebert**
 
 ## License
 
