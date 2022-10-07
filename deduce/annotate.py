@@ -483,7 +483,7 @@ def annotate_date(text):
 def annotate_age(text):
     """Annotate ages"""
     text = re.sub(
-        "(\d{1,3})([ -](jarige|jarig|jaar))(?![^<]*>)", "<AGE \\1>\\2", text
+        "(\d{1,3})([ -](jarige|jarig|jaar|ans))(?![^<]*>)", "<AGE \\1>\\2", text
     )
     return text
 
