@@ -379,6 +379,13 @@ def annotate_residence(text):
                   text,
                   flags=re.IGNORECASE)
 
+    # Detect the pattern <LOCATION city> Saint <PERSON name> and convert to <LOCATION Saint-Name>
+    text = re.sub('>\s?-?\s?(saint|sint|st|st.)\s?-?\s?\s?<PERSON ',
+                  lambda pattern: pattern.group().split("<PERSON ")[0].split(">")[-1],
+                  text,
+                  flags=re.IGNORECASE)
+
+
     return text
 
 def replace_altrecht_text(match: re.Match) -> str:
