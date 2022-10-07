@@ -517,7 +517,7 @@ def annotate_patientnumber(text, patient_id):
     if len(patient_id) >= 4:
         text = re.sub(patient_id, lambda patient_num : "<PATIENTNUMBER " + patient_num.group() + ">", text, re.IGNORECASE)
 
-    text = re.sub("(\d{7})(?![^<]*>)", "<PATIENTNUMBER \\1>", text)
+    text = re.sub("(\d{7,9})(?![^<]*>)", "<PATIENTNUMBER \\1>", text)
     return text
 
 
