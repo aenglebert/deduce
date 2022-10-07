@@ -477,7 +477,7 @@ def annotate_phonenumber(text):
     """Annotate phone numbers"""
     # Belgium phone number
     text = re.sub(
-        "(((\+|00)32[ ]?(?:\(0\)[ ]?)?)|0){1}(4(60|[789]\d)\/?(\s?\d{2}\.?){2}(\s?\d{2})|(\d\/?\s?\d{3}|\d{2}\/?\s?\d{2})(\.?\s?\d{2}){2})",
+        "\(?(((\+|00)32[ ]?(?:\(0\)[ ]?)?)|0)(4(60|[789]\d)\/?(\s?\d{2}\.?){2}(\s?\d{2})|(\d\/?\)?\s?\d{3}|\d{2}\/?\s?\d{2})(\.?\s?\d{2}){2})",
         lambda phone_match: '<PHONENUMBER ' + phone_match.group() + '>',
         text,
     )
