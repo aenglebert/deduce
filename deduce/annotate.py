@@ -371,7 +371,15 @@ def annotate_residence(text):
         token_index += len(max_list) - 1
 
     # Return the de-identified text
-    return join_tokens(tokens_deid)
+    text = join_tokens(tokens_deid)
+
+    # Detect the pattern <LOCATION Saint-> <PERSON name> and convert to <LOCATION Saint-Name>
+    text = re.sub('(saint|sint|st|st.)\s?-?\s?\>\s?<PERSON ',
+                  lambda pattern: pattern.group().split(">")[0],
+                  text,
+                  flags=re.IGNORECASE)
+
+    return text
 
 def replace_altrecht_text(match: re.Match) -> str:
     """
