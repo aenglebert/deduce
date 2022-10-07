@@ -571,7 +571,7 @@ def annotate_email(text):
     text = re.sub(
         "<(PATIENT |PERSON )\w+\s?>@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*",
         merge_mail,
-        text,
+        text
     )
 
     text = re.sub(
@@ -584,6 +584,7 @@ def annotate_email(text):
         "(([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?))(?![^<]*>)",
         "<URL \\1>",
         text,
+        flags=re.IGNORECASE,
     )
 
     return text
