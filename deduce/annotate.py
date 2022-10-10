@@ -36,15 +36,15 @@ def annotate_names(
             token.lower() in PREFIXES
             and next_token != ""
             and next_token[0].isupper()
-            and next_token.lower() not in WHITELIST
+            #and next_token.lower() not in WHITELIST
         )
 
         # If the condition is met, tag the tokens and continue to the next position
         if prefix_condition:
             tokens_deid.append(
-                f"<PREFIXNAME {join_tokens(tokens[token_index])}>"
+                f"<PREFIXNAME {join_tokens(tokens[token_index:next_token_index+1])}>"
             )
-            #token_index = next_token_index
+            token_index = next_token_index
             continue
 
         ### Interfix based detection
