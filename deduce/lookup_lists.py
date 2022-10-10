@@ -34,6 +34,8 @@ MEDTERM += read_list("medischeterm.lst", encoding="latin-1")
 TOP1000 = read_list("top1000_fr.lst", encoding="latin-1")
 TOP1000 += read_list("top1000_du.lst", encoding="latin-1")
 TOP1000 = list(set(TOP1000).difference(read_list("firstname_nl.lst", lower=True)))
+TOP1000 = list(set(TOP1000).difference(read_list("firstname_be.lst", lower=True)))
+
 
 # A list of stop words
 # french stopwords from https://github.com/stopwords-iso/stopwords-fr/blob/master/stopwords-fr.json
