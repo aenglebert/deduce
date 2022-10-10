@@ -29,7 +29,16 @@ PREFIXES = read_list("prefix.lst")
 # Read a list of medical terms
 MEDTERM = read_list("cbip.lst", encoding="latin-1")
 MEDTERM += read_list("medischeterm.lst", encoding="latin-1")
-MEDTERM += read_list("medical_terms_fr.lst", encoding="latin-1")
+MEDTERM += read_list("medical_terms_fr.lst", encoding="latin-1", min_len=2)
+
+EPONYMS = read_list("medical_eponyms.lst", encoding="latin-1", min_len=2)
+
+for eponym in read_list("medical_eponyms.lst", encoding="latin-1", min_len=2):
+    last_word = eponym.split(" ")[-1]
+    if last_word[0].isupper() and len(last_word) > 3:
+        EPONYMS.append(last_word)
+
+MEDTERM += list(set(EPONYMS))
 
 # Read the top 1000 of most used words in Dutch, and then filter all surnames from it
 TOP1000 = read_list("top1000_fr.lst", encoding="latin-1")
