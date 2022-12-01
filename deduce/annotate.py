@@ -414,7 +414,7 @@ def annotate_institution(text):
         token_index = token_index + 1
         token = tokens[token_index]
 
-        if token_index > 0 and (tokens[token_index-1] + " " + token).lower() != "examen clinique":
+        if token_index < 0 or (tokens[token_index-1] + " " + token).lower() != "examen clinique":
 
             # Find all tokens that are prefixes of the remainder of the lowercasetext
             prefix_matches = INSTITUTION_TRIE.find_all_prefixes(tokens_lower[token_index:])
