@@ -8,6 +8,7 @@ from .tokenizer import tokenize_split
 #  Read first names
 FIRST_NAMES = read_list("firstname_nl.lst", min_len=2)
 FIRST_NAMES += read_list("firstname_be.lst", min_len=2)
+FIRST_NAMES += read_list("firstname_fr.lst", min_len=2)
 
 # Read last names
 SURNAMES = read_list("surname_nl.lst", encoding="utf-8", min_len=2, normalize=True)
@@ -45,6 +46,7 @@ TOP1000 = read_list("top1000_fr.lst", encoding="latin-1")
 TOP1000 += read_list("top1000_du.lst", encoding="latin-1")
 TOP1000 = list(set(TOP1000).difference(read_list("firstname_nl.lst", lower=True)))
 TOP1000 = list(set(TOP1000).difference(read_list("firstname_be.lst", lower=True)))
+TOP1000 = list(set(TOP1000).difference(read_list("firstname_fr.lst", lower=True)))
 
 
 # A list of stop words
