@@ -385,8 +385,8 @@ def annotate_residence(text):
                   text,
                   flags=re.IGNORECASE)
 
-
     return text
+
 
 def replace_altrecht_text(match: re.Match) -> str:
     """
@@ -396,6 +396,7 @@ def replace_altrecht_text(match: re.Match) -> str:
     :return: the final string
     """
     return match.group(0)[:len(match.group(0)) - len(match.group(1)) - 1] + match.group(1) + '>'
+
 
 def annotate_institution(text):
     """Annotate institutions"""
@@ -413,19 +414,21 @@ def annotate_institution(text):
         token_index = token_index + 1
         token = tokens[token_index]
 
-        # Find all tokens that are prefixes of the remainder of the lowercasetext
-        prefix_matches = INSTITUTION_TRIE.find_all_prefixes(tokens_lower[token_index:])
+        if token_index > 0 and (tokens[token_index-1] + " " + token).lower() != "examen clinique":
 
-        # If none, just append the current token and move to the next
-        if len(prefix_matches) == 0:
-            tokens_deid.append(token)
-            continue
+            # Find all tokens that are prefixes of the remainder of the lowercasetext
+            prefix_matches = INSTITUTION_TRIE.find_all_prefixes(tokens_lower[token_index:])
 
-        # Else annotate the longest sequence as institution
-        max_list = max(prefix_matches, key=len)
-        joined_institution = join_tokens(tokens[token_index:token_index + len(max_list)])
-        tokens_deid.append("<INSTITUTION {}>".format(joined_institution))
-        token_index += len(max_list) - 1
+            # If none, just append the current token and move to the next
+            if len(prefix_matches) == 0:
+                tokens_deid.append(token)
+                continue
+
+            # Else annotate the longest sequence as institution
+            max_list = max(prefix_matches, key=len)
+            joined_institution = join_tokens(tokens[token_index:token_index + len(max_list)])
+            tokens_deid.append("<INSTITUTION {}>".format(joined_institution))
+            token_index += len(max_list) - 1
 
     # Return
     text = join_tokens(tokens_deid)
