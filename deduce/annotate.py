@@ -52,6 +52,7 @@ def annotate_names(
         interfix_condition = (
             token.lower() in INTERFIXES
             and next_token != ""
+            and len(next_token) > 2
             and next_token in INTERFIX_SURNAMES
             and next_token.lower() not in WHITELIST
         )
@@ -250,18 +251,11 @@ def annotate_names_context(text):
 
         # If the token is an interfix
         interfix_condition = (
-            token in INTERFIXES
-            and
-            # And the token is preceded by an initial, found initial or found name
-            (
-                is_initial(previous_token)
-                or "INITIAL" in previous_token
-                or "NAME" in previous_token
-            )
-            and
-            # And the next token must be capitalized
-            next_token != ""
-            and (next_token[0].isupper() or next_token[0] == "<")
+                token.lower() in INTERFIXES
+                and next_token != ""
+                and len(next_token) > 2
+                and next_token in INTERFIX_SURNAMES
+                and next_token.lower() not in WHITELIST
         )
 
         # If the condition is met, tag the tokens and continue
