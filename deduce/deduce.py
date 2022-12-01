@@ -97,7 +97,7 @@ def annotate_text(
     if locations:
         text = annotate_residence(text)
         text = annotate_address(text)
-        text = annotate_postalcode(text)
+        #text = annotate_postalcode(text)
 
     # Ages
     if ages:

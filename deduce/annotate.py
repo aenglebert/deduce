@@ -408,7 +408,8 @@ def annotate_institution(text):
         token_index = token_index + 1
         token = tokens[token_index]
 
-        if token_index < 0 or (tokens[token_index-1] + " " + token).lower() != "examen clinique":
+        if token_index < 0 or (tokens[token_index-1] + " " + token).lower() != "examen clinique" \
+                or (token + " " + tokens[token_index + 1]).lower() != "examen clinique":
 
             # Find all tokens that are prefixes of the remainder of the lowercasetext
             prefix_matches = INSTITUTION_TRIE.find_all_prefixes(tokens_lower[token_index:])
@@ -563,8 +564,8 @@ def annotate_address(text):
     )
 
     text = re.sub(
-        r"(((\d+){1,6}(\w{0,2})?|(\d+){0,6}))\s?(rue|avenue|chaussée|chemin|allée|enclos|route|cité|quai|place|"
-        r"square|boulevard|drève|quartier|colline|val|impasse|promenade|rempart|passage)"
+        r"(((\d+){1,6}(\w{0,2})?|(\d+){0,6}))\s?(rue|avenue|chaussée|chemin|allée|enclos|route|cité|quai|"
+        r"square|boulevard|drève|quartier|colline|impasse|promenade|rempart)"
         r"(\s(d'|de|du|des|l'|le|la|les))*\s*,?\s*[A-Z]\w+\s*,?\s*(((\d+){1,6}(\w{0,2})?|(\d+){0,6}))",
         get_address_match_replacement,
         text,
