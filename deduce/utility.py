@@ -65,7 +65,7 @@ def merge_triebased(tokens, trie):
 def type_of(char):
     """Determines whether a character is alpha, a fish hook, or other"""
 
-    if char.isalpha():
+    if char.isalnum():
         return "alpha"
 
     if char in ("<", ">"):
