@@ -308,7 +308,7 @@ def annotate_names_context(text):
 
         # If the token is "en", and the previous token is tagged, and the next token is capitalized
         and_pattern_condition = (
-            token == "en"
+            token == "et"
             and len(previous_token) > 0
             and len(next_token) > 0
             and "<" in previous_token
