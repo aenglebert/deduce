@@ -439,6 +439,12 @@ def annotate_institution(text):
                   text,
                   flags=re.IGNORECASE)
 
+    # Detect the pattern <INSTITUTION ... > <PERSON st name> and convert to <INSTITUTION Saint-Name>
+    text = re.sub('<INSTITUTION (\w* ?)*> <PERSON (saint|sint|st|st.)',
+                  lambda pattern: "".join(pattern.group().split("> <PERSON")),
+                  text,
+                  flags=re.IGNORECASE)
+
     # Return the text
     return text
 
