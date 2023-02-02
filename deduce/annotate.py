@@ -335,6 +335,12 @@ def annotate_names_context(text):
     # Join the tokens again to form the de-identified text
     textdeid = join_tokens(tokens_deid).strip()
 
+    # Find all cap words following a name
+    textdeid = re.sub("<\w*NAME\w* \w*> [A-Z]{4,}",
+                      lambda pattern: "> <SURNAMEUNKNOWN".join(pattern.group().split(">")) + ">",
+                      textdeid
+                      )
+
     # If nothing changed, we are done
     if text == textdeid:
         return textdeid
