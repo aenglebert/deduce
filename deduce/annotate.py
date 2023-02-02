@@ -462,9 +462,11 @@ def annotate_date(text):
     # Name the punctuation mark that comes after a date, for replacement purposes
     punctuation_name = 'n'
 
-    text = re.sub("""(?ix) (((Lundi|Mardi|Mercredi|Jeudi|Vendredi|Samedi|Dimanche))?
+    text = re.sub("""(?ix) (0?[1-9]|[12]\d|3[01])\s?[\/]\s?[012]\d(\s?[\/]\s?(19|20)?\d{2})?|
+    (0?[1-9]|[12]\d|3[01])\s?.\s?\d{2}(\s?.\s?\d{2,4})|
+    (((Lundi|Mardi|Mercredi|Jeudi|Vendredi|Samedi|Dimanche))?
     (\d{1,2}\s)?(janvier|février|Mars|Avril|Mai|Juin|Juillet|Août|Septembre|Octobre|Novembre|Décembre)
-    [\s\n\r\.,](\d{2,4})?)|(0?[1-9]|[12]\d|3[01])\s?[\/.]\s?\d{2}(\s?[\/.]\s?\d{2,4})?""",
+    [\s\n\r\.,](\d{2,4})?)""",
                   lambda date_match: '<DATE ' + date_match.group() + '>',
                   text)
 
