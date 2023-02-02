@@ -289,6 +289,11 @@ def annotate_names_context(text):
             and len(next_token) > 3
             and next_token[0].isupper()
             and next_token.lower() not in WHITELIST
+            and (next_token in SURNAMES
+                 or next_token in FIRST_NAMES
+                 or next_token in INTERFIX_SURNAMES
+                 )
+
         )
 
         # If a match is found, tag and continue
