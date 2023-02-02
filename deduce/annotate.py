@@ -36,6 +36,8 @@ def annotate_names(
             token.lower() in PREFIXES
             and next_token != ""
             and next_token[0].isupper()
+            and not (len(token) > 1 and token.lower()[1] not in ['0', '1', '2', '3', '4', '5', '°']
+                     and len(token) > 2 and token.lower()[2] not in ['0', '1', '2', '3', '4', '5', '°'])
             #and next_token.lower() not in WHITELIST
         )
 
