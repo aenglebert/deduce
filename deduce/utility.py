@@ -65,7 +65,7 @@ def merge_triebased(tokens, trie):
 def type_of(char):
     """Determines whether a character is alpha, a fish hook, or other"""
 
-    if char.isalnum():
+    if char.isalnum() or char == "°":
         return "alpha"
 
     if char in ("<", ">"):
@@ -232,7 +232,10 @@ def flatten(tag):
 
     # Split on the first whitespace, so we can distinguish between name and rest
     tagname = tagspl[0]
-    tagrest = tagspl[1]
+    if len(tagspl) == 2:
+        tagrest = tagspl[1]
+    else:
+        tagrest = ""
 
     # Output is initially empty
     tagvalue = ""
